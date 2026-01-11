@@ -257,6 +257,19 @@ function Roids.ValidateHp(unit, bigger, amount)
     return powerPercent > tonumber(amount);
 end
 
+-- Checks if the target has health loss equal to the specified amount
+-- unit: The unit we're checking
+-- bigger: 1 if the percentage needs to be bigger, 0 if it needs to be lower
+-- amount: The required amount
+function Roids.ValidateRawHpLoss(unit, bigger, amount)
+    local currentHpLoss = UnitHealthMax(unit) - UnitHealth(unit); 
+    if bigger == 0 then
+        return currentHpLoss < tonumber(amount);
+    end
+
+    return currentHpLoss > tonumber(amount);
+end
+
 -- Checks whether the given creatureType is the same as the target's creature type
 -- creatureType: The type to check
 -- target: The target's unitID
@@ -488,9 +501,17 @@ Roids.Keywords = {
     hp = function(conditionals)
         return Roids.ValidateHp(conditionals.target, conditionals.hp.bigger, conditionals.hp.amount);
     end,
-    
+
+    rawhploss = function(conditionals)
+        return Roids.ValidateRawHpLoss(conditionals.target, conditionals.rawhploss.bigger, conditionals.rawhploss.amount);
+    end,
+
     myhp = function(conditionals)
         return Roids.ValidateHp("player", conditionals.myhp.bigger, conditionals.myhp.amount);
+    end,
+
+    myrawhploss = function(conditionals)
+        return Roids.ValidateRawHpLoss("player", conditionals.myrawhploss.bigger, conditionals.myrawhploss.amount);
     end,
     
     type = function(conditionals)
