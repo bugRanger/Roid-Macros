@@ -13,11 +13,13 @@ SLASH_RELOAD1 = "/rl";
 
 SlashCmdList.RELOAD = function() ReloadUI(); end
 
-SLASH_USE1 = "/use";
+SLASH_USE1 = "/rmuse";
 
 SlashCmdList.USE = Roids.DoUse;
 
 SLASH_EQUIP1 = "/equip";
+
+SLASH_EQUIP2 = "/rmequip";
 
 SlashCmdList.EQUIP = Roids.DoUse;
 
